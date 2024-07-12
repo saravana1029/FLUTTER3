@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class RegistrationPage extends StatefulWidget {
+  @override
+  _RegistrationPageState createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+ TextEditingController _referralcodeController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Registration'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(labelText: 'Username'),
+            ),
+            SizedBox(height: 20.0),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+                   SizedBox(height: 20.0),
+            TextField(
+              controller: _referralcodeController,
+              decoration: InputDecoration(labelText: 'referralcode'),
+              obscureText: true,
+            ),
+            SizedBox(height: 20.0),
+            FlatButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              padding: EdgeInsets.all(16.0),
+              child: Text('Register'),
+              onPressed: () {
+                _register();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _register() {
+    // Implement registration logic here
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+    String password = _referralcodeController.text ;
+
+    // Call API function to register
+    // Example: registerUser(username, password);
+
+    // Handle success/failure and navigation
+  }
+}
+
+
+
+Future<void> registerUser(String username, String password) async {
+  String apiUrl = 'http://devapiv4.dealsdray.com/api/v2/user/email/referral';
+  Map<String, String> headers = {"Content-type": "application/json"};
+  String json = '{"username": "$username", "password": "$password","referralcode": "$referralcode"}';
+
+  try {
+    final response = await http.post(apiUrl, headers: headers, body: json);
+    if (response.statusCode == 200) {
+      // Registration successful
+      print('Registration successful');
+      // Navigate to another page or show success message
+    } else {
+      // Registration failed
+      print('Registration failed');
+      // Handle error, show error message, etc.
+    }
+  } catch (e) {
+    // Exception occurred
+    print('Exception $e');
+    // Handle exception, show error message, etc.
+  }
+}
+
+void _register() {
+  String username = _usernameController.text;
+  String password = _passwordController.text;
+  String referralcode = _referralcodeController.text;
+
+}
+
+
+
+
